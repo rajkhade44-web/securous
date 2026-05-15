@@ -1,0 +1,23 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:3306/securous
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    issuer: securous
+    access-token-life-cycle-seconds: 3600
+    refresh-token-ttl-seconds: 86400
+    cookie-name: refresh-cookie
+    cookie-secure: false
+    cookie-http-only: true
+    cookie-same-site: lax
+    cookie-domain: ""
