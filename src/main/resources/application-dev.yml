@@ -9,12 +9,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
+server:
+  port: 8081
 app:
   jwt:
     secret: ${JWT_SECRET}
     issuer: securous
-    access-token-life-cycle-seconds: 3600
+    access-token-life-cycle-seconds: 60
     refresh-token-ttl-seconds: 86400
     cookie-name: refresh-cookie
     cookie-secure: false
