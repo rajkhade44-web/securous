@@ -9,6 +9,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
 server:
   port: 8081
 app:
@@ -22,3 +28,4 @@ app:
     cookie-http-only: true
     cookie-same-site: lax
     cookie-domain: ""
+    max-sessions: ${MAX_SESSIONS:3}

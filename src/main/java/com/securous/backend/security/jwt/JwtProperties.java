@@ -12,7 +12,9 @@ public record JwtProperties(
         boolean cookieSecure,
         boolean cookieHttpOnly,
         String cookieSameSite,
-        String cookieDomain
+        String cookieDomain,
+
+        int maxSessions
 ) {
 }
 
