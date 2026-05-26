@@ -39,4 +39,10 @@ public class RefreshToken {
 
     @Column(name = "replaced_by_jti")
     private String replacedByJti;
+
+    @Column(name = "device_info")
+    private String deviceInfo;
+
+    @Column(name = "ip_address")
+    private String ipAddress;
 }

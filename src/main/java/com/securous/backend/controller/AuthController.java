@@ -1,10 +1,8 @@
 package com.securous.backend.controller;
 
-import com.securous.backend.dto.LoginRequest;
-import com.securous.backend.dto.RegisterRequest;
-import com.securous.backend.dto.TokenResponse;
-import com.securous.backend.dto.UserDto;
+import com.securous.backend.dto.*;
 import com.securous.backend.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,25 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response){
-        return ResponseEntity.ok(authService.login(loginRequest, response));
+    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response, HttpServletRequest httpServletRequest){
+        return ResponseEntity.ok(authService.login(loginRequest, response,httpServletRequest));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenResponse> refresh(
+            @RequestBody(required = false) RefreshTokenRequest body,
+            HttpServletRequest  request,
+            HttpServletResponse response) {
+        return ResponseEntity.ok(
+                authService.refresh(body, request, response));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @RequestBody(required = false) RefreshTokenRequest body,
+            HttpServletRequest  request,
+            HttpServletResponse response) {
+        authService.logout(body, request, response);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -2,6 +2,7 @@ package com.securous.backend.security.jwt;
 
 import com.securous.backend.security.CustomUserDetails;
 import com.securous.backend.security.CustomUserDetailsService;
+import com.securous.backend.service.TokenBlackListService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,6 +29,7 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
+    private final TokenBlackListService blackListService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token=jwtService.extractTokenFromRequest(request).orElse(null);
@@ -39,6 +41,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if(!jwtService.isAccessToken(token)){
             filterChain.doFilter(request,response);
+            return;
+        }
+
+        String jti = jwtService.getJtiFromToken(token);
+        if (blackListService.isBlacklisted(jti)) {
+            log.warn("Blacklisted token — jti: {}", jti);
+            filterChain.doFilter(request, response);
             return;
         }
 

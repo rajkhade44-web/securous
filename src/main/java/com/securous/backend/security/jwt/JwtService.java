@@ -99,4 +99,18 @@ public class JwtService {
     public String getUserIdFromToken(String token) {
        return parseToken(token).getSubject();
     }
+
+    public boolean isRefreshToken(String token) {
+        Claims claims = parseToken(token);
+        return TYPE_REFRESH.equals(claims.get(CLAIM_TYPE));
+
+    }
+
+    public String getJtiFromToken(String token) {
+       return parseToken(token).getId();
+    }
+
+    public long getExpiresInSeconds(String token) {
+       return parseToken(token).getExpiration().getTime();
+    }
 }

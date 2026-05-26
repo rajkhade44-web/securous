@@ -39,4 +39,8 @@ public class CookieService {
         }
         return builder.build();
     }
+
+    public String getRefreshTokenCookieName() {
+        return null;
+    }
 }
