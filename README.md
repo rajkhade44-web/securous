@@ -57,6 +57,10 @@ docker run --name redis-securous -p 6379:6379 -d redis:7-alpine
 - DB_USERNAME  
 - DB_PASSWORD
 - JWT_SECRET
+- MAX_SESSIONS
+- REDIS_HOST
+- REDIS_PORT
+- REDIS_PASSWORD
 
 ## Security Design
 - Access token — short lived (1 hour), stateless
